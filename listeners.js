@@ -1,5 +1,4 @@
 document.addEventListener("keydown", function (e) {
-  console.log(e)
   teclaPulsada = e.keyCode;
   tecla[e.keyCode] = true;
 });
