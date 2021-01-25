@@ -1,27 +1,48 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8" />
 
-    <title>CANVAS</title>
-    <script src="variables.js"></script>
-    <script src="listeners.js"></script>
-    <script src="programa.js"></script>
-    <style>
-      body {
-        margin: 0 auto;
-      }
-      h1 {
-        text-align: center;
-      }
-      #myCanvas {
-        border: dotted 2px yellow;
-        background: black;
-      }
-    </style>
-  </head>
-  <body>
-    <h1>CANVAS - Animacion Base</h1>
-    <canvas id="myCanvas" width="600px" height="500px"> Paila!!!! </canvas>
-  </body>
+<head>
+  <meta charset="UTF-8" />
+
+  <title>CANVAS</title>
+  <script src="variables.js"></script>
+  <script src="programa.js"></script>
+  <style>
+    body {
+      margin: 0 auto;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    #myCanvas {
+      border: dotted 2px yellow;
+      background: black;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>CANVAS - Animacion Base</h1>
+  <canvas id="myCanvas" width="600px" height="500px"> Paila!!!! </canvas>
+
+  <audio id="boing">
+    <source src="sonidos/boing.mp3">
+    <source src="sonidos/boing.ogg">
+  </audio>
+  <audio id="disparo">
+    <source src="sonidos/disparo.mp3">
+    <source src="sonidos/disparo.ogg">
+  </audio>
+  <audio id="intro">
+    <source src="sonidos/intro.mp3">
+    <source src="sonidos/intro.ogg">
+  </audio>
+  <audio id="fin">
+    <source src="sonidos/gameOver.mp3">
+    <source src="sonidos/gameOver.ogg">
+  </audio>
+</body>
+
 </html>
