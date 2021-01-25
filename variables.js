@@ -22,13 +22,13 @@ function Context(ctx, canvas) {
   this.de = {};
   this.gameOver = function () {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    balas_array = [];
-    enemigos_array = [];
-    balas_enemigos_array = [];
+    this.balas_array = [];
+    this.enemigos_array = [];
+    this.balas_enemigos_array = [];
     clearTimeout(this.de);
     this.finJuego = true;
     mensaje(this, "GAME OVER");
-    fin.play();
+    this.fin.play();
   };
 }
 
