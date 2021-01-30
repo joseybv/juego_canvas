@@ -16,9 +16,9 @@ function Context(ctx, canvas) {
   this.puntos = 0;
   this.numEnemigos = 0;
   this.jugador = {};
-  this.enemigos_array = new Array();
-  this.balas_enemigos_array = new Array();
-  this.balas_array = new Array();
+  this.enemigos_array = [];
+  this.balas_enemigos_array = [];
+  this.balas_array = [];
   this.de = {};
   this.gameOver = function () {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);

@@ -1,6 +1,6 @@
-var x = 100;
-var y = 100;
-var context;
+let x = 100;
+const y = 100;
+let context;
 
 function anima(context) {
   if (!context.finJuego) {
@@ -20,7 +20,7 @@ function score(context) {
 }
 
 function mensaje(context, cadena) {
-  var lon = (context.canvas.width - 53 * cadena.length) / 2;
+  const lon = (context.canvas.width - 53 * cadena.length) / 2;
   context.ctx.fillStyle = "green";
   context.ctx.clearRect(0, 0, context.canvas.width, context.canvas.height);
   context.ctx.font = "bold 50px Rosewwod Std";
@@ -28,8 +28,8 @@ function mensaje(context, cadena) {
 }
 
 function colisiones(context) {
-  for (var eIdx = 0; eIdx < context.enemigos_array.length; eIdx++) {
-    for (var bIdx = 0; bIdx < context.balas_array.length; bIdx++) {
+  for (let eIdx = 0; eIdx < context.enemigos_array.length; eIdx++) {
+    for (let bIdx = 0; bIdx < context.balas_array.length; bIdx++) {
       enemigo = context.enemigos_array[eIdx];
       bala = context.balas_array[bIdx];
       if (enemigo && bala) {
@@ -51,8 +51,8 @@ function colisiones(context) {
     }
   }
 
-  for (var bIdx = 0; bIdx < context.balas_enemigos_array.length; bIdx++) {
-    var bala = context.balas_enemigos_array[bIdx];
+  for (let bIdx = 0; bIdx < context.balas_enemigos_array.length; bIdx++) {
+    let bala = context.balas_enemigos_array[bIdx];
     if (bala) {
       if (
         bala.x > context.jugador.x &&
@@ -97,11 +97,11 @@ function pinta(context) {
 }
 
 function movimientoEnemigo(context) {
-  for (var idx = 0; idx < context.enemigos_array.length; idx++) {
-    var enemigo = context.enemigos_array[idx];
+  for (let idx = 0; idx < context.enemigos_array.length; idx++) {
+    let enemigo = context.enemigos_array[idx];
     enemigo.dibuja();
     context.numEnemigos++; // TODO no tiene fin
-    if (enemigo.y == context.jugador.y) {
+    if (enemigo.y === context.jugador.y) {
       console.log("el jugador fue invadido");
       context.gameOver();
     }
@@ -109,15 +109,15 @@ function movimientoEnemigo(context) {
 }
 
 function acabaJuegoSinEnemigos(context) {
-  if (context.numEnemigos == 0) {
+  if (context.numEnemigos === 0) {
     console.log("no quedan mas enemigos.");
     context.gameOver();
   }
 }
 
 function disparosJugador(context) {
-  for (var idx = 0; idx < context.balas_array.length; idx++) {
-    var bala = context.balas_array[idx];
+  for (let idx = 0; idx < context.balas_array.length; idx++) {
+    let bala = context.balas_array[idx];
     if (bala) {
       bala.dibuja();
       if (bala.y < 0) {
@@ -143,13 +143,13 @@ function disparosEnemigo(context) {
 
 function disparaEnemigo(context) {
   //console.log("los invasores atacan");
-  var ultimos = new Array();
-  for (var idx = context.enemigos_array.length - 1; idx > 0; idx--) {
+  let ultimos = [];
+  for (let idx = context.enemigos_array.length - 1; idx > 0; idx--) {
     if (context.enemigos_array[idx]) ultimos.push(idx);
-    if (ultimos.length == 10) break;
+    if (ultimos.length === 10) break;
   }
-  var d = ultimos[Math.floor(Math.random() * 10)];
-  var enemigo = context.enemigos_array[d];
+  let d = ultimos[Math.floor(Math.random() * 10)];
+  let enemigo = context.enemigos_array[d];
   context.balas_enemigos_array.push(
     new Bala(context.ctx, enemigo.x, enemigo.y, enemigo.w / 2)
   );
@@ -167,9 +167,9 @@ window.requestAnimationFrame = (function () {
 })();
 
 window.onload = function () {
-  var canvas = document.getElementById("myCanvas");
+  let canvas = document.getElementById("myCanvas");
   if (canvas && canvas.getContext("2d")) {
-    var ctx = canvas.getContext("2d");
+    let ctx = canvas.getContext("2d");
     console.log("width: " + canvas.width + ", height: " + canvas.height);
     if (ctx) {
       context = new Context(ctx, canvas);
@@ -179,7 +179,7 @@ window.onload = function () {
       context.fin = document.getElementById("fin");
       x = context.canvas.width / 2;
 
-      var imagen = new Image();
+      let imagen = new Image();
       imagen.src = "imagenes/torre.fw.png";
       imagen.onload = function () {
         context.jugador = new Jugador(context.ctx, imagen, 0);
@@ -187,11 +187,11 @@ window.onload = function () {
         setTimeout(anima, 3500, context);
       };
 
-      var imagenEnemigo = new Image();
+      let imagenEnemigo = new Image();
       imagenEnemigo.src = "imagenes/invader.fw.png";
       imagenEnemigo.onload = function () {
-        for (var col = 0; col < 5; col++) {
-          for (var row = 0; row < 10; row++) {
+        for (let col = 0; col < 5; col++) {
+          for (let row = 0; row < 10; row++) {
             context.enemigos_array.push(
               new Enemigo(
                 context.ctx,
@@ -203,6 +203,13 @@ window.onload = function () {
           }
         }
         context.de = setInterval(disparaEnemigo, 3500, context);
+      };
+
+      let jugadorRobot = new Image();
+      jugadorRobot.src = "imagenes/robot_jugador.png";
+      jugadorRobot.onload = function () {
+        context.jugadorRobot = new AnimarImagen(context, jugadorRobot);
+        context.jugadorRobot.step();
       };
 
       document.addEventListener("keydown", function (e) {
@@ -220,3 +227,71 @@ window.onload = function () {
     }
   }
 };
+
+function AnimarImagen(context, body) {
+  this.scale = 2;
+  this.width = 16;
+  this.height = 18;
+  this.scaledWidth = this.scale * this.width;
+  this.scaledHeight = this.scale * this.height;
+  this.cycleLoop = [0, 1, 0, 2];
+  this.currentLoopIndex = 0;
+  this.frameCount = 0;
+  this.currentDirection = 0;
+  this.context = context;
+  this.img = body;
+
+  this.step = function () {
+    if (!this.context) return;
+    this.frameCount++;
+    if (this.frameCount < 15) {
+      window.requestAnimationFrame(this.step);
+      return;
+    }
+    this.frameCount = 0;
+    this.context.ctx.clearRect(
+      0,
+      0,
+      this.context.canvas.width,
+      this.context.canvas.height
+    );
+    this.context.drawFrame(
+      this.cycleLoop[this.currentLoopIndex],
+      this.currentDirection,
+      15,
+      15
+    );
+    this.currentLoopIndex++;
+    if (this.currentLoopIndex >= this.cycleLoop.length) {
+      this.currentLoopIndex = 0;
+      this.currentDirection++;
+    }
+    // Reset to the "down" direction once we've run through them all
+    if (this.currentDirection >= 4) {
+      this.currentDirection = 0;
+    }
+    window.requestAnimationFrame(this.step);
+  };
+
+  this.drawFrame = function (frameX, frameY, canvasX, canvasY) {
+    if (!this.context) return;
+    this.context.ctx.drawImage(
+      this.img,
+      frameX * this.width,
+      frameY * this.height,
+      this.width,
+      this.height,
+      canvasX,
+      canvasY,
+      this.scaledWidth,
+      this.scaledHeight
+    );
+  };
+
+  this.init = function () {
+    this.drawFrame(0, 0, 0, 0);
+    this.drawFrame(1, 0, this.scaledWidth, 0);
+    this.drawFrame(0, 0, this.scaledWidth * 2, 0);
+    this.drawFrame(2, 0, this.scaledWidth * 3, 0);
+  };
+}
